@@ -11,7 +11,6 @@ export class GalleryService {
     @InjectModel(Gallery.name) private galleryModel: Model<GalleryDocument>,
   ) {}
 
-  // 갤러리의 작성자 반환
   async getAuthorId(galleryObjectId: any): Promise<any> {
     const gallery = await this.galleryModel.findOne({ _id: galleryObjectId });
     return gallery.authorId;
@@ -61,7 +60,6 @@ export class GalleryService {
   ): Promise<Gallery[]> {
     const filteredGallery = await this.galleryModel
       .find({
-        // 1차 필터링
         category: { $regex: category, $options: 'i' },
         title: { $regex: title, $options: 'i' },
         nickname: { $regex: nickname, $options: 'i' },
@@ -73,7 +71,7 @@ export class GalleryService {
   }
 
   async getUpcomingGallery(): Promise<Gallery[]> {
-    const date = new Date(); // 오늘 날짜 확인
+    const date = new Date();
     const upcomings = await this.galleryModel
       .find({ startDate: { $gt: date } }) // 갤러리 오픈 날짜가 오늘 이후인 것들만 가져옴
       .sort({ startDate: 1 }) // 가져온 것들 중 오픈 날짜가 임박한 것들만 가져옴
@@ -98,7 +96,6 @@ export class GalleryService {
     });
 
     for (let i = 0; i < 8; i++) {
-      // 오픈 중인 것 중 랜덤으로 갤러리 가져오기
       const random = Math.floor(Math.random() * totalCount);
       if (randoms.indexOf(random) < 0) {
         randoms.push(random);
@@ -109,7 +106,7 @@ export class GalleryService {
     return randomGalleries;
   }
 
-  async getGalleryById(galleryObjectId: string): Promise<Gallery> {
+  async getGalleryById(galleryObjectId: string): Promise<any> {
     return await this.galleryModel.findOne({ _id: galleryObjectId });
   }
 
@@ -121,7 +118,7 @@ export class GalleryService {
       startDate: openDate,
       endDate: closeDate,
       ...galleryData,
-    }); // 만약 유저 생성에서 추가해줘야할 것이 있을 경우 이 부분에서 추가
+    });
   }
 
   async updateGalleryById(
@@ -133,13 +130,16 @@ export class GalleryService {
       .updateOne(galleryUpdateData);
   }
 
-  async deleteGalleryById(galleryObjectId: string) {
-    try {
-      await this.galleryModel.deleteOne({ _id: galleryObjectId });
-      return true;
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
+  async updateGalleriesNickname(
+    userObjectId: string,
+    nickname: string,
+  ): Promise<any> {
+    return await this.galleryModel
+      .where({ authorId: userObjectId })
+      .updateMany({ nickname: nickname });
+  }
+
+  async deleteGalleryById(galleryObjectId: string): Promise<any> {
+    return await this.galleryModel.deleteOne({ _id: galleryObjectId });
   }
 }

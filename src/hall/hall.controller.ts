@@ -10,7 +10,6 @@ import {
   Request,
   Res,
 } from '@nestjs/common';
-import { Hall } from './schema/hall.schema';
 import { HallService } from './hall.service';
 import { CreateHallDto } from './dto/create-hall.dto';
 import { UpdateHallDto } from './dto/update-hall.dto';
@@ -23,13 +22,7 @@ export class HallController {
     private readonly hallService: HallService,
   ) {}
 
-  @Get() // 모든 Hall 데이터 조회
-  async getAllHalls(): Promise<Hall[]> {
-    return await this.hallService.getAllHalls();
-  }
-
-  //@UseGuards(JwtAuthGuard)
-  @Get(':id') // 특정 Hall 데이터 조회
+  @Get(':id')
   async getHallById(@Param('id') hallObjectId: string, @Res() res: any) {
     try {
       const hall = await this.hallService.getHallById(hallObjectId);
@@ -39,6 +32,7 @@ export class HallController {
         data: {
           galleryId: String(hall.galleryId),
           hallName: hall.hallName,
+          hallTheme: hall.hallTheme,
           imagesData: hall.imagesData,
         },
       });
@@ -51,12 +45,12 @@ export class HallController {
     }
   }
 
-  @Post() // Hall 데이터 생성
+  @Post()
   async createHall(@Body() hallData: CreateHallDto) {
     return await this.hallService.createHall(hallData);
   }
 
-  @Put(':id') // Hall 데이터 수정
+  @Put(':id')
   async updateHallById(
     @Param('id') hallObjectId: string,
     @Body() updateHallData: UpdateHallDto,
@@ -65,7 +59,7 @@ export class HallController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id') // Hall 데이터 삭제
+  @Delete(':id')
   async deleteHallById(
     @Request() req,
     @Param('id') hallObjectId: string,

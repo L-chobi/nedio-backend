@@ -12,13 +12,22 @@ export class Hall {
     ref: 'Gallery',
     required: true,
   })
-  galleryId: Gallery; // 포함된 갤러리 id, 얘 참조로 바꿔야함
+  galleryId: Gallery;
 
   @Prop({ required: true })
-  hallName: string; // 관 이름
+  hallName: string;
+
+  @Prop({ required: true })
+  hallTheme: string;
 
   @Prop()
-  imagesData: { imageUrl: string; imageDescription; string }[]; // 이미지데이터({사진경로, 사진설명})
+  imagesData: {
+    imageTitle: string;
+    imageUrl: string;
+    imageDescription: string;
+    width: number;
+    height: number;
+  }[];
 }
 
 export const HallSchema = SchemaFactory.createForClass(Hall);
