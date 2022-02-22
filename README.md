@@ -173,4 +173,4 @@ https://documenter.getpostman.com/view/18610955/UVkjvdDh
 <br/>
 
 ## 작성자
-김동근(kimdg0429@naver.com, https://github.com/Kimdonggeun-42)
+김동근(kimdg0429@naver.com, https://github.com/L-chobi)
