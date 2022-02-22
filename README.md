@@ -93,6 +93,8 @@
 ```
 <br/>
 
+![구조도](https://user-images.githubusercontent.com/70579655/155118460-11264a14-b8a0-4429-9c25-0f2fd852b948.png)
+
 ## 프로젝트 사용법(컴파일, 실행방법)
 
 ```bash
