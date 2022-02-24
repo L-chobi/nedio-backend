@@ -156,6 +156,14 @@ $ npm run start:prod
 
 <br/>
 
+## 나의 역할
+1. 전체 api(로그인, 게시물 CRUD, 검색 등 모든 api) 개발 및 보수
+2. JWT를 이용한 로그인 인증 구현
+3. MongoDB를 이용한 DB 설계 및 관리, 연동
+4. aws s3를 이용한 이미지 업로드 구현 및 연동
+5. GCP, Nginx, Dokcer를 이용한 배포
+6. API 문서 작성(Postman 이용)
+
 ## api 문서
 
 ### Notion
